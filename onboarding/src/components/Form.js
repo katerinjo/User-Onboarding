@@ -1,5 +1,12 @@
 import React from 'react';
+import { Form, Field, withFormik } from 'formik';
 
-export default () => {
-  return (<p>hello world</p>);
+const Basic = () => {
+  return (
+    <Form>
+      <Field type='text' name='name' placeholder='test' />
+    </Form>
+  );
 }
+
+export default withFormik({})(Basic);
