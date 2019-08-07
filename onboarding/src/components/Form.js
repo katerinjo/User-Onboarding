@@ -34,9 +34,9 @@ const Basic = ({ touched, errors, tos }) => {
 export default withFormik({
   mapPropsToValues(props) {
     return {
-      name: props.name || 'something',
-      email: props.email || 'valid@email.com',
-      password: props.password || 'somethingelse',
+      name: props.name || '',
+      email: props.email || '',
+      password: props.password || '',
       tos: props.tos || false,
       subFun: props.subFun
     };
