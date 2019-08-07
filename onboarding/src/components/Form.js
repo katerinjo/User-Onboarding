@@ -37,7 +37,8 @@ export default withFormik({
       name: props.name || 'something',
       email: props.email || 'valid@email.com',
       password: props.password || 'somethingelse',
-      tos: props.tos || false
+      tos: props.tos || false,
+      subFun: props.subFun
     };
   },
 
@@ -59,10 +60,16 @@ export default withFormik({
       .oneOf([true], 'you must agree to the ToS')
   }),
 
-  handleSubmit(vals) {
+  handleSubmit(vals, { resetForm, setSubmitting }) {
     axios
       .post('https://reqres.in/api/users', vals)
-      .then(console.log)
-      .catch(console.log)
+      .then(res => {
+        vals.subFun(res.data);
+        resetForm();
+      })
+      .catch(err => {
+        console.log(err);
+        setSubmitting(false);
+      });
   }
 })(Basic);
