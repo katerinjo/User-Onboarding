@@ -2,16 +2,29 @@ import React from 'react';
 import { Form, Field, withFormik } from 'formik';
 import * as Yup from 'yup';
 
-const Basic = values => {
+const Basic = ({ touched, errors, tos }) => {
   return (
     <Form>
-      <Field type='text' name='name' placeholder='name' />
-      <Field type='text' name='email' placeholder='email' />
-      <Field type='password' name='password' placeholder='password' />
+      <div>
+        <Field type='text' name='name' placeholder='name' />
+        {touched.name && errors.name && <p>{errors.name}</p>}
+      </div>
+      <div>
+        <Field type='text' name='email' placeholder='email' />
+        {touched.email && errors.email && <p>{errors.email}</p>}
+      </div>
+      <div>
+        <Field type='password' name='password' placeholder='password' />
+        {touched.password && errors.password && <p>{errors.password}</p>}
+      </div>
+      <div>
       <label>
-        <Field type="checkbox" name="tos" checked={values.tos} />
+        <Field type="checkbox" name="tos" checked={tos} />
         Terms Of Service
       </label>
+        {touched.tos && errors.tos && <p>{errors.tos}</p>}
+      </div>
+
       <button type='submit'>submit</button>
     </Form>
   );
@@ -30,18 +43,19 @@ export default withFormik({
   validationSchema: Yup.object().shape({
     name: Yup
       .string()
-      .required('test'),
+      .min(1, "name can't be empty")
+      .required(),
     email: Yup
       .string()
-      .email()
-      .required(),
+      .email('not a valid email')
+      .required('email required'),
     password: Yup
       .string()
-      .min(5)
+      .min(5, "password needs at least 5 characters")
       .required(),
     tos: Yup
       .boolean()
-      .required()
+      .oneOf([true], 'you must agree to the ToS')
   }),
 
   handleSubmit(vals) {
