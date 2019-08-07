@@ -9,4 +9,10 @@ const Basic = () => {
   );
 }
 
-export default withFormik({})(Basic);
+export default withFormik({
+  mapPropsToValues(props) {
+    return {
+      name: props.name || ''
+    };
+  }
+})(Basic);
