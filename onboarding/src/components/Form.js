@@ -5,6 +5,9 @@ const Basic = () => {
   return (
     <Form>
       <Field type='text' name='name' placeholder='name' />
+      <Field type='text' name='email' placeholder='email' />
+      <Field type='password' name='password' placeholder='password' />
+      <Field type='checkbox' name='tos' />
       <button>submit</button>
     </Form>
   );
@@ -13,7 +16,10 @@ const Basic = () => {
 export default withFormik({
   mapPropsToValues(props) {
     return {
-      name: props.name || ''
+      name: props.name || '',
+      email: props.email || '',
+      password: props.password || '',
+      tos: props.tos || false
     };
   },
 
